@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>-->
+    <style type="text/css">
+        form#imageInput {
+            position:absolute;
+            left:5;
+            top:5;
+        }
+        canvas#myCanvas {
+            z-index:-1;
+            position:absolute;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+        }
+        canvas#entityCanvas {
+            z-index:0;
+            position:absolute;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+        }
+        div#cyclesFound {
+            position:absolute;
+            text-wrap:none;
+        }
+        div#cyclist {
+            position:absolute;
+            left:0;
+            top:0;
+        }
+        div#nodeCountSlider {
+            margin-bottom: 5px;
+            margin-top: 10px;
+        }
+    </style>
+    
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
+    <!--<script src="utility/functional_javascript.js"></script>
+    <script src="utility/V2.js"></script>
+    <script src="utility/utility.js"></script>-->
+    <link href="https://c9.io/john-holland/jsentitysystem/workspace/JQueryUI/css/smoothness/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+    <script src="https://c9.io/john-holland/jsentitysystem/workspace/JSLoader.js"></script>
+    <script type="text/javascript">
+        loadScript(["https://c9.io/john-holland/jsentitysystem/workspace/jquery-ui.loader.js",
+                    "https://c9.io/john-holland/jsentitysystem/workspace/entity_system.loader.js",
+                   "index.js"], function() {
+                           $(function() {
+                                $("#dialog").dialog({
+                                    width: 530,
+                                    height: 250,
+                                    close: function() {
+                                        $("#settingsButton").show();
+                                    }
+                                    });
+                                $("#cyclesDialog").dialog({
+                                    width: 400,
+                                    height: 250,
+                                    top: 10,
+                                    left: 10,
+                                    autoOpen: false
+                                });
+                                $("#nodeCountSlider").slider({
+                                    range: false,
+                                    min: 3,
+                                    max: 100,
+                                    value: 10,
+                                    slide: function(event, ui) {
+                                        currentNodeCount = ui.value;
+                                        generateNewCycleAssuredGraph();
+                                        $("#nodeCount").val(currentNodeCount);
+                                    }
+                                });
+                                $("#nodeCount").val(currentNodeCount);
+                                $("#settingsButton").button().click(function( event, ui ) {
+                                    $(this).hide();
+                                    $("#dialog").dialog( "open" );
+                                }).hide();
+                           });
+                       });
+    </script>
+    
+    <head>
+        <title>JavaScript Entity System Test!</title>
+    </head>
+    <body bgcolor="white">
+        <canvas id="myCanvas">
+            Your browser does not support the HTML5 canvas tag. Boooooo
+        </canvas>
+        <canvas id="entityCanvas">
+            Your browser does not support the HTML5 canvas tag. Boooooo
+        </canvas>
+        
+        <div id="settingsButton">Open Settings</div>
+        
+        <div id="dialog" title="Settings">
+                <label>Node Count: </label><input type="text" onKeyUp="nodeCount_keyUp()" style="width:80px" id="nodeCount"></input>
+                <INPUT TYPE="button" NAME="button" style="float:right" Value="Generate New Graph" onClick="generateNewCycleAssuredGraph()" /></p>
+                <div id="nodeCountSlider"></div>
+                <Input type="checkbox" id="useRandom" isChecked="True" onClick="useRandomChecked()" /> Use Random Layout
+                <Br />
+                Time Out: <Input type="text" id="Timeout" value="5" onKeyUp="set_timeout()" />
+                <Br />
+                <INPUT TYPE="button" NAME="button" Value="Get Cycles" onClick="getCycles()" />
+                
+                <Input type="button" style="float:right" value="Add Cycle Following Arrows" onClick="addCycleEntities()" />
+        </div>
+        <div id="cyclesDialog" title="Cycles">
+            <div id="cyclesFound">
+            </div>
+        </div>
+    </body>
+</html>
